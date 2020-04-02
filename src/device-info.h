@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <limits.h>
+#include <sys/stat.h>
 
 // glib
 #include <glib.h>
@@ -14,6 +15,7 @@
 #include <libudev.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 // intltool
 #include <glib/gi18n.h>

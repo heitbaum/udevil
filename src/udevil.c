@@ -39,7 +39,7 @@
 // environ
 #include <paths.h>
 
-// priviledges
+// privileges
 #include <sys/param.h>
 #include <sys/types.h>
 
@@ -547,7 +547,7 @@ void spc_sanitize_environment(int preservec, char **preservev) {
 }
 
 /* *************************************************************************
- * priviledges
+ * privileges
 ************************************************************************** */
 
 static int   orig_ngroups = -1;
@@ -613,7 +613,7 @@ void drop_privileges( int permanent )
 
     return;
 _drop_abort:
-    printf( _("udevil: error 1: unable to drop priviledges - please report this problem\n") );
+    printf( _("udevil: error 1: unable to drop privileges - please report this problem\n") );
     abort();
 }
 
@@ -3517,7 +3517,7 @@ _get_type:
                 }
                 // test for race conditions
                 restore_privileges();
-                fd = open( data->device_file, O_RDWR );
+                fd = open( data->device_file, O_RDONLY );
                 drop_privileges( 0 );
                 if ( fd == -1 )
                 {
