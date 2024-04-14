@@ -247,7 +247,7 @@ void parse_mounts( gboolean report )
         devmount->mounts = g_list_sort( devmount->mounts, (GCompareFunc) g_strcmp0 );
         m = devmount->mounts;
         points = g_strdup( (gchar*)m->data );
-        while ( m = m->next )
+        while ( (m = m->next) )
         {
             old_points = points;
             points = g_strdup_printf( "%s, %s", old_points, (gchar*)m->data );
@@ -437,7 +437,7 @@ if ( !( cond & G_IO_NVAL ) )
     const char *action;
     const char *acted = NULL;
     char* devnode;
-    if ( udevice = udev_monitor_receive_device( umonitor ) )
+    if ( (udevice = udev_monitor_receive_device( umonitor )) )
     {
         action = udev_device_get_action( udevice );
         devnode = g_strdup( udev_device_get_devnode( udevice ) );
@@ -975,7 +975,7 @@ static void lock_log( gboolean lock )
             i++;
         }
         // create lock file
-        if ( file = fopen( log_lock_file, "w" ) )
+        if ( (file = fopen( log_lock_file, "w" )) )
             fclose( file );
     }
     else
@@ -1056,7 +1056,7 @@ static void expire_log( guint days )
             return;
         }
         unlink( str );
-        if ( file = fopen( str, "w" ) )
+        if ( (file = fopen( str, "w" )) )
             fclose( file );
         g_free( str );
     }
@@ -1136,7 +1136,7 @@ static void dump_log()
 
     // clean expired log entries
     const char* daystr;
-    if ( daystr = read_config( "log_keep_days", NULL ) )
+    if ( (daystr = read_config( "log_keep_days", NULL )) )
     {
         guint days = atoi( daystr );
         if ( days > 0 )
@@ -1190,7 +1190,7 @@ static gboolean validate_in_list( const char* name, const char* type, const char
 //printf("list[%s_%s] = {%s}\n", name, type, list );
     while ( list && list[0] )
     {
-        if ( comma = strchr( list, ',' ) )
+        if ( (comma = strchr( list, ',' )) )
         {
             element = g_strndup( list, comma - list );
             list = comma + 1;
@@ -1267,7 +1267,7 @@ static gboolean validate_in_groups( const char* name, const char* type,
 
     while ( list && list[0] )
     {
-        if ( comma = strchr( list, ',' ) )
+        if ( (comma = strchr( list, ',' )) )
         {
             element = g_strndup( list, comma - list );
             list = comma + 1;
@@ -1336,7 +1336,7 @@ static char* validate_options( const char* name, const char* type,
     while ( opts && opts[0] )
     {
         // get an option
-        if ( comma = strchr( opts, ',' ) )
+        if ( (comma = strchr( opts, ',' )) )
         {
             oelement = g_strndup( opts, comma - opts );
             opts = comma + 1;
@@ -1355,7 +1355,7 @@ static char* validate_options( const char* name, const char* type,
         found = FALSE;
         while ( list && list[0] )
         {
-            if ( comma = strchr( list, ',' ) )
+            if ( (comma = strchr( list, ',' )) )
             {
                 element = g_strndup( list, comma - list );
                 list = comma + 1;
@@ -1668,7 +1668,7 @@ static char* get_loop_from_file( const char* path )
 
         if ( !exit_status && stdout )
         {
-            if ( str = strchr( stdout, ':' ) )
+            if ( (str = strchr( stdout, ':' )) )
             {
                 str[0] = '\0';
                 if ( g_str_has_prefix( stdout, "/dev/loop" ) )
@@ -1941,7 +1941,7 @@ static gboolean path_is_mounted_block( const char* path, char** device_file )
     g_strfreev( lines );
     if ( ret && device_file )
     {
-        if ( udev = udev_new() )
+        if ( (udev = udev_new()) )
         {
             struct udev_device *udevice;
             dev_t dev;
@@ -2480,7 +2480,7 @@ static void recursive_remove_dir( const gchar* path )
         dir = g_dir_open( path, 0, NULL );
         if ( dir )
         {
-            while ( name = g_dir_read_name( dir ) )
+            while ( (name = g_dir_read_name( dir )) )
             {
                 entry = g_build_filename( path, name, NULL );
                 if ( g_file_test( path, G_FILE_TEST_IS_DIR ) )
@@ -2516,7 +2516,7 @@ static char* get_default_mount_dir( const char* type )
     char* auto_media = g_build_filename( AUTO_MEDIA_DIR, g_get_user_name(), NULL );
     while ( list && list[0] )
     {
-        if ( comma = strchr( list, ',' ) )
+        if ( (comma = strchr( list, ',' )) )
         {
             element = g_strndup( list, comma - list );
             list = comma + 1;
@@ -2644,7 +2644,7 @@ static int parse_network_url( const char* url, const char* fstype,
         else
         {
             // detect curlftpfs or ftpfs
-            if ( str = g_find_program_in_path( "curlftpfs" ) )
+            if ( (str = g_find_program_in_path( "curlftpfs" )) )
                 nm->fstype = g_strdup( "curlftpfs" );
             else
                 nm->fstype = g_strdup( "ftpfs" );
@@ -2745,15 +2745,15 @@ static int parse_network_url( const char* url, const char* fstype,
     char* trim_url = g_strdup( xurl );
 
     // user:pass
-    if ( str = strchr( xurl, '@' ) )
+    if ( (str = strchr( xurl, '@' )) )
     {
-        if ( str2 = strchr( str + 1, '@' ) )
+        if ( (str2 = strchr( str + 1, '@' )) )
         {
             // there is a second @ - assume username contains email address
             str = str2;
         }
         str[0] = '\0';
-        if ( str2 = strchr( xurl, ':' ) )
+        if ( (str2 = strchr( xurl, ':' )) )
         {
             str2[0] = '\0';
             if ( str2[1] != '\0' )
@@ -2765,7 +2765,7 @@ static int parse_network_url( const char* url, const char* fstype,
     }
 
     // path
-    if ( str = strchr( xurl, '/' ) )
+    if ( (str = strchr( xurl, '/' )) )
     {
         nm->path = g_strdup( str );
         str[0] = '\0';
@@ -2775,7 +2775,7 @@ static int parse_network_url( const char* url, const char* fstype,
     if ( xurl[0] == '[' )
     {
         // ipv6 literal
-        if ( str = strchr( xurl, ']' ) )
+        if ( (str = strchr( xurl, ']' )) )
         {
             str[0] = '\0';
             if ( xurl[1] != '\0' )
@@ -2786,7 +2786,7 @@ static int parse_network_url( const char* url, const char* fstype,
     }
     else if ( xurl[0] != '\0' )
     {
-        if ( str = strchr( xurl, ':' ) )
+        if ( (str = strchr( xurl, ':' )) )
         {
             str[0] = '\0';
             if ( str[1] != '\0' )
@@ -2939,7 +2939,7 @@ _get_type:
     }
 
     // determine mount type
-    if ( i = parse_network_url( data->device_file, data->fstype, &netmount ) )
+    if ( (i = parse_network_url( data->device_file, data->fstype, &netmount )) )
     {
         if ( i == 2 )
         {
@@ -3129,7 +3129,7 @@ _get_type:
                             // cifs ipv6 mtab format: //::1/share
                             // add literal brackets:  //[::1]/share
                             str = g_strdup( data->device_file + 2 );
-                            if ( str2 = strchr( str, '/' ) )
+                            if ( (str2 = strchr( str, '/' )) )
                                 str2[0] = '\0';
                             g_free( data->device_file );
                             data->device_file = g_strdup_printf( "//[%s]%s%s",
@@ -3152,7 +3152,7 @@ _get_type:
         else
         {
             // unmounting a file
-            if ( str = get_loop_from_file( data->device_file ) )
+            if ( (str = get_loop_from_file( data->device_file )) )
             {
                 // unmounting a file attached to loop
                 if ( !get_realpath( &str ) )
@@ -3444,7 +3444,7 @@ _get_type:
             char* list = device->mount_points;
             while ( list && list[0] )
             {
-                if ( comma = strchr( list, ',' ) )
+                if ( (comma = strchr( list, ',' )) )
                 {
                     element = g_strndup( list, comma - list );
                     list = comma + 1;
@@ -3894,7 +3894,7 @@ _get_type:
         {
             if ( netmount->user )
             {
-                if ( str = strchr( netmount->user, '/' ) )
+                if ( (str = strchr( netmount->user, '/' )) )
                 {
                     // domain included   DOMAIN/USER@HOST
                     str[0] = '\0';
@@ -3976,7 +3976,7 @@ _get_type:
         ret = 1;
         goto _finish;
     }
-    if ( str = validate_options( "allowed_options", fstype, options ) )
+    if ( (str = validate_options( "allowed_options", fstype, options )) )
     {
         wlog( _("udevil: denied 90: option '%s' is not an allowed option\n"), str, 2 );
         g_free( str );
@@ -4722,7 +4722,7 @@ static int command_remove( CommandData* data )
     
     // now extract the part we want, up to the grand-parent of the host
     // e.g: /sys/devices/pci0000:00/0000:00:06.0/usb1/1-2
-    while ( c = strrchr( host_path, '/' ) )
+    while ( (c = strrchr( host_path, '/' )) )
     {
         // end the string there, to move back
         *c = 0;
@@ -4840,7 +4840,7 @@ static int command_clean()
     restore_privileges();
     while ( list && list[0] )
     {
-        if ( comma = strchr( list, ',' ) )
+        if ( (comma = strchr( list, ',' )) )
         {
             element = g_strndup( list, comma - list );
             list = comma + 1;
@@ -4860,7 +4860,7 @@ static int command_clean()
             dir = g_dir_open( selement, 0, NULL );
             if ( dir )
             {
-                while ( name = g_dir_read_name( dir ) )
+                while ( (name = g_dir_read_name( dir )) )
                 {
                     path = g_build_filename( selement, name, ".udevil-mount-point", NULL );
                     if ( stat( path, &statbuf ) == 0 && S_ISREG( statbuf.st_mode )
