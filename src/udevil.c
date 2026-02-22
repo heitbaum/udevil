@@ -681,7 +681,7 @@ char *replace_string( const char* orig, const char* str, const char* replace,
     const char* cur;
     char* result = NULL;
     char* old_result;
-    char* s;
+    const char* s;
 
     if ( !orig || !( s = strstr( orig, str ) ) )
         return g_strdup( orig );  // str not in orig
@@ -1314,13 +1314,13 @@ static char* validate_options( const char* name, const char* type,
                                                             const char* options )
 {
     char* fulllist = NULL;
-    char* list;
     char* str;
-    char* comma;
     char* element;
     char* oelement;
     char* selement;
     char* opt;
+    const char* comma;
+    const char* list;
     const char* opts;
     gboolean found;
     char* ret = NULL;
